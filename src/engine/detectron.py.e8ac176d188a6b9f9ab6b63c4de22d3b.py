@@ -63,6 +63,7 @@ def train(resume):
 
     :param resume: bool, if True, resume training an existing model in the given output directory
     """
+    if resume: print("Resuming Training for previously saved state.")
     cfg = get_cfg()
     trainer = DefaultTrainer(cfg)
     trainer.resume_or_load(resume=resume)

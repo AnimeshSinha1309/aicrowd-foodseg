@@ -8,7 +8,7 @@ import argparse
 
 from loader.download_dataset import download_dataset, fix_errors, print_data_description
 from loader.limit_classes import limit_files
-# from engine.detectron import setup_config, train, evaluate, predict
+from engine.detectron import setup_config, train
 
 
 if __name__ == '__main__':
@@ -36,6 +36,8 @@ if __name__ == '__main__':
     # Limit the number of classes we are training the models on
     limit_files(args.work_dir, 'train', ['train', 'val'], args.class_count)
 
-    #The model gets saved as model_final.pth inside cfg.OUTPUT_directory path 
+    #The model gets saved as model_final.pth inside cfg.OUTPUT_directory path
     setup_config(args.iterations, args.work_dir, args.batch_size, args.class_count)
-    train()
+    if args.resume:
+        print('Attempting to resume training the model from the current state.')
+    train(resume=args.resume)

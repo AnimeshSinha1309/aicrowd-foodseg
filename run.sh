@@ -11,5 +11,5 @@ python --version
 export PYTHONPATH="$PYTHONPATH:.:src"
 python -m pip install -r requirements.txt \
     -f https://download.pytorch.org/whl/cu101/torch_stable.html \
-    -f https://dl.fbaipublicfiles.com/detectron2/wheels/cu101/torch1.6/index.html
+    -f https://dl.fbaipublicfiles.com/detectron2/wheels/cu101/torch1.5/index.html
 python src/main.py
