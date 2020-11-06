@@ -33,8 +33,7 @@ def limit_files(working_dir, directory_train, directory_targets, classes_count):
                            'annotations.json'), 'r') as json_file:
         train_json = json.load(json_file)
     class_labels, class_counts = np.unique(list(map(
-        lambda x: x['category_id'], train_json['annotations'])),
-        return_counts=True)
+        lambda x: x['category_id'], train_json['annotations'])), return_counts=True)
     class_frequencies = {label: count for count, label in sorted(
         list(zip(class_counts, class_labels)), reverse=True)}
     classes_taken = list(class_frequencies.keys())[:classes_count]
@@ -45,8 +44,7 @@ def limit_files(working_dir, directory_train, directory_targets, classes_count):
             data_json = json.load(json_file)
         data_json = limit_classes(data_json, classes_taken)
         print(len(data_json['annotations']),
-            'annotations with', len(data_json['categories']),
-            'categories.')
+              'annotations with', len(data_json['categories']), 'categories.')
         with open(os.path.join(working_dir, 'data', directory_target,
                                'processed_annotations.json'), 'w') as outfile:
             json.dump(data_json, outfile)
