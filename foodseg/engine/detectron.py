@@ -21,7 +21,7 @@ class DetectronEngine:
     Class to handle Config, Training, Evaluation, etc.
     """
 
-    def __init__(self, working_dir, batch_size=16, num_classes=300):
+    def __init__(self, working_dir, batch_size=2, num_classes=300):
         """
         Sets up the configuration for the Detectron model
 

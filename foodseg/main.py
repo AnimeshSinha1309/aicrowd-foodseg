@@ -21,17 +21,20 @@ if __name__ == '__main__':
                         help='number of classes to limit the training dataset to (top frequency)')
     PARSER.add_argument('-w', '--work-dir', type=str, default='scratch',
                         help='root working directory to store data and models')
-    PARSER.add_argument('-b', '--batch-size', type=int, default=128,
+    PARSER.add_argument('-b', '--batch-size', type=int, default=2,
                         help='batch size for the model (memory-speed tradeoff)')
     PARSER.add_argument('-r', '--resume', action='store_const', const=True, default=False,
+                        help='resume from current model stored in output directory?')
+    PARSER.add_argument('--no-check-data', action='store_const', const=True, default=False,
                         help='resume from current model stored in output directory?')
     ARGS = PARSER.parse_args()
 
     # Download the dataset
     download_dataset(ARGS.work_dir)
     print_data_description(ARGS.work_dir)
-    fix_errors(ARGS.work_dir, 'train')
-    fix_errors(ARGS.work_dir, 'val')
+    if not ARGS.no_check_data:
+        fix_errors(ARGS.work_dir, 'train')
+        fix_errors(ARGS.work_dir, 'val')
 
     # Limit the number of classes we are training the models on
     limit_files(ARGS.work_dir, 'train', ['train', 'val'], ARGS.class_count)
