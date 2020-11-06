@@ -10,8 +10,8 @@ import pathlib
 import shutil
 import requests
 
-import cv2 as cv
 import tqdm
+import cv2 as cv
 
 
 def __download_file(url, filename):
@@ -83,11 +83,11 @@ def print_data_description(working_dir):
     print('Test images from val folder directory:',
           len(os.listdir(os.path.join(working_dir, 'data', 'test', 'images'))))
 
-    with open(os.path.join(working_dir, 'data', 'train','annotations.json')) as json_file:
+    with open(os.path.join(working_dir, 'data', 'train', 'annotations.json')) as json_file:
         train_json = json.load(json_file)
-    with open(os.path.join(working_dir, 'data', 'val','annotations.json')) as json_file:
+    with open(os.path.join(working_dir, 'data', 'val', 'annotations.json')) as json_file:
         val_json = json.load(json_file)
-    with open(os.path.join(working_dir, 'data', 'test','annotations.json')) as json_file:
+    with open(os.path.join(working_dir, 'data', 'test', 'annotations.json')) as json_file:
         test_json = json.load(json_file)
 
     print('Keys of train annotation file:', train_json.keys())
