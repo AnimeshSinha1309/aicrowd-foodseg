@@ -64,7 +64,7 @@ class WandbTrainer(DefaultTrainer):
         :param config: CfgNode, model configuration file
         """
         self.project = project
-        super().__init__(self, cfg)
+        super().__init__(cfg)
 
     def build_writers(self):
         """
@@ -73,12 +73,5 @@ class WandbTrainer(DefaultTrainer):
         return [
             CommonMetricPrinter(self.max_iter),
             WandbWriter(config=self.cfg, job_type='train', project=self.project),
-            TensorboardXWriter(),
+            TensorboardXWriter(log_dir='logs'),
         ]
-
-    def train(self):
-        """
-        Trains the model after starting a WandB run
-        :returns: return value of DefaultTrainer.train
-        """
-        return self.train()

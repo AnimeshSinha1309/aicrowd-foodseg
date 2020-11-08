@@ -71,7 +71,7 @@ class DetectronEngine:
                              model in the given output directory
         """
         self.cfg.SOLVER.MAX_ITER = iterations
-        trainer = DefaultTrainer(self.cfg)
+        trainer = WandbTrainer(self.cfg)
         trainer.resume_or_load(resume=resume)
         trainer.train()
 

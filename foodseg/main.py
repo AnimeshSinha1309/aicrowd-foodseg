@@ -26,6 +26,7 @@ if __name__ == '__main__':
     PARSER.add_argument('-r', '--resume', action='store_const', const=True, default=False,
                         help='resume from current model stored in output directory?')
     ARGS = PARSER.parse_args()
+    print('Training for %d iterations on %d classes.'%(ARGS.iterations, ARGS.class_count))
 
     # Download the dataset
     download_dataset(ARGS.work_dir)

@@ -111,15 +111,16 @@ def fix_errors(working_dir, directory):
     errors_fixed = 0
     with open(os.path.join(working_dir, 'data', directory, 'annotations.json')) as json_file:
         data_json = json.load(json_file)
+    image_list = []
     with tqdm.tqdm(data_json['images']) as progress_bar:
         for record in progress_bar:
             img = cv.imread(os.path.join(working_dir, 'data', directory,
                                          'images', record['file_name']))
             if record['height'] != img.shape[0] or record['width'] != img.shape[1]:
-                record['height'], record['width'] = record['width'], record['height']
-                assert record['height'] == img.shape[0] and \
-                       record['width'] == img.shape[1], 'Image dimentions still incorrect'
                 errors_fixed += 1
                 progress_bar.set_postfix(fixed=errors_fixed)
+            else:
+                image_list.append(record)
+        data_json['images'] = image_list
     with open(os.path.join(working_dir, 'data', directory, 'annotations.json'), 'w') as outfile:
         json.dump(data_json, outfile)
