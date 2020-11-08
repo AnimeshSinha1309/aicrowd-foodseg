@@ -2,5 +2,5 @@
 The AICrowd Food Instance Segmentation code-base
 """
 
-import engine
-import loader
+import foodseg.engine
+import foodseg.loader

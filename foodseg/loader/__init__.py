@@ -2,5 +2,5 @@
 Manages getting the data and preprocessing it
 """
 
-import loader.download_dataset
-import loader.limit_classes
+import foodseg.loader.download_dataset
+import foodseg.loader.limit_classes
