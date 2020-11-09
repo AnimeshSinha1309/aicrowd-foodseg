@@ -9,3 +9,4 @@ matplotlib~=3.3.2
 pandas
 seaborn
 opencv-python
+wandb

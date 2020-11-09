@@ -21,7 +21,7 @@ if __name__ == '__main__':
                         help='number of classes to limit the training dataset to (top frequency)')
     PARSER.add_argument('-w', '--work-dir', type=str, default='scratch',
                         help='root working directory to store data and models')
-    PARSER.add_argument('-b', '--batch-size', type=int, default=128,
+    PARSER.add_argument('-b', '--batch-size', type=int, default=2,
                         help='batch size for the model (memory-speed tradeoff)')
     PARSER.add_argument('-r', '--resume', action='store_const', const=True, default=False,
                         help='resume from current model stored in output directory?')
