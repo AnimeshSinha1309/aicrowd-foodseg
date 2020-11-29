@@ -1,5 +1,5 @@
 """
-Implements functions to conviniently run the Detectron2 models.
+Implements functions to conveniently run the Detectron2 models.
 Sets up the config, and runs the training and validation loops.
 """
 
