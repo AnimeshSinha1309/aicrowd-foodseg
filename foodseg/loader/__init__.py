@@ -2,6 +2,5 @@
 Manages getting the data and preprocessing it
 """
 
-import foodseg.loader.download_dataset
-import foodseg.loader.limit_classes
-import foodseg.loader.cutout_images
+import foogseg.loader.download_dataset
+import foogseg.loader.limit_classes
