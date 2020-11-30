@@ -30,7 +30,7 @@ def limit_files(working_dir, directory_train, directory_targets, classes_count):
     """
     # Generate the List of classes from training file
     with open(os.path.join(working_dir, 'data', directory_train,
-                           'annotations.json'), 'r') as json_file:
+                           'fixed_annotations.json'), 'r') as json_file:
         train_json = json.load(json_file)
     class_labels, class_counts = np.unique(list(map(
         lambda x: x['category_id'], train_json['annotations'])), return_counts=True)
@@ -40,7 +40,7 @@ def limit_files(working_dir, directory_train, directory_targets, classes_count):
     # Loop over all targets and fix them
     for directory_target in directory_targets:
         with open(os.path.join(working_dir, 'data', directory_target,
-                               'annotations.json'), 'r') as json_file:
+                               'fixed_annotations.json'), 'r') as json_file:
             data_json = json.load(json_file)
         data_json = limit_classes(data_json, classes_taken)
         print(len(data_json['annotations']),

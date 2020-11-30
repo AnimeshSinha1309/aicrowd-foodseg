@@ -6,9 +6,11 @@ An instance segmenation task runner for the AICrowd food dataset.
 
 import argparse
 
-from loader.download_dataset import download_dataset, fix_errors, print_data_description
-from loader.limit_classes import limit_files
-from engine.detectron import DetectronEngine
+from foogseg.loader.download_dataset import download_dataset, fix_errors, print_data_description
+from foogseg.loader.limit_classes import limit_files
+from foogseg.engine.detectron import DetectronEngine
+from foogseg.engine.backbone import Backbone
+from foogseg.loader.cutout_images import cutout_images
 
 
 if __name__ == '__main__':
@@ -40,4 +42,13 @@ if __name__ == '__main__':
     ENGINE = DetectronEngine(ARGS.work_dir, ARGS.batch_size, ARGS.class_count)
     if ARGS.resume:
         print('Attempting to resume training the model from the current state.')
+
+    # Pretrain the backbone
+    cutout_images(ARGS.work_dir, 'train')
+    cutout_images(ARGS.work_dir, 'val')
+    cutout_images(ARGS.work_dir, 'test')
+    BACKBONE = Backbone(ENGINE.trainer)
+    BACKBONE.fit(20, ARGS.work_dir)
+
+    # Train the thing
     ENGINE.train(iterations=ARGS.iterations, resume=ARGS.resume)

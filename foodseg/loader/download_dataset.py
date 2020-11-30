@@ -121,5 +121,6 @@ def fix_errors(working_dir, directory):
                        record['width'] == img.shape[1], 'Image dimentions still incorrect'
                 errors_fixed += 1
                 progress_bar.set_postfix(fixed=errors_fixed)
-    with open(os.path.join(working_dir, 'data', directory, 'annotations.json'), 'w') as outfile:
+    with open(os.path.join(working_dir, 'data', directory, 
+                           'fixed_annotations.json'), 'w') as outfile:
         json.dump(data_json, outfile)

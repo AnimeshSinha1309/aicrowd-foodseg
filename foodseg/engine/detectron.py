@@ -1,5 +1,5 @@
 """
-Implements functions to conveniently run the Detectron2 models.
+Implements functions to conviniently run the Detectron2 models.
 Sets up the config, and runs the training and validation loops.
 """
 
@@ -11,6 +11,8 @@ from detectron2.engine import DefaultTrainer
 from detectron2.config import get_cfg
 from detectron2.data.datasets import register_coco_instances
 from detectron2.utils.logger import setup_logger
+from detectron2.evaluation import COCOEvaluator, inference_on_dataset
+from detectron2.data import build_detection_test_loader
 
 setup_logger()
 assert torch.cuda.is_available(), 'Switch on GPU Runtime'
@@ -21,7 +23,7 @@ class DetectronEngine:
     Class to handle Config, Training, Evaluation, etc.
     """
 
-    def __init__(self, working_dir, batch_size=16, num_classes=300):
+    def __init__(self, working_dir, iterations = 5000, batch_size=16, num_classes=300):
         """
         Sets up the configuration for the Detectron model
 
@@ -61,7 +63,10 @@ class DetectronEngine:
         os.makedirs(self.cfg.OUTPUT_DIR, exist_ok=True)
         self.cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5
 
-    def train(self, iterations, resume):
+        self.cfg.SOLVER.MAX_ITER = iterations
+        self.trainer = DefaultTrainer(self.cfg)
+
+    def train(self, resume):
         """
         Trains the model
 
@@ -69,14 +74,15 @@ class DetectronEngine:
         :param resume: bool, if True, resume training an existing
                              model in the given output directory
         """
-        self.cfg.SOLVER.MAX_ITER = iterations
-        trainer = DefaultTrainer(self.cfg)
-        trainer.resume_or_load(resume=resume)
-        trainer.train()
+        self.trainer.resume_or_load(resume=resume)
+        self.trainer.train()
 
     def evaluate(self):
         """
         Runs the evaluations for the model
         Returns the accuracy statistics
         """
-        raise NotImplementedError('Evaluation is not implemented yet')
+        evaluator = COCOEvaluator("my_dataset_val", cfg, False, output_dir=cfg.OUTPUT_DIR)
+        val_loader = build_detection_test_loader(cfg, "my_dataset_val")
+        val_results = inference_on_dataset(self.trainer.model, val_loader, evaluator)
+        return val_results

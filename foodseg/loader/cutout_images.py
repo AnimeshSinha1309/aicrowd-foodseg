@@ -7,10 +7,7 @@ from matplotlib import pyplot as plt
 import tqdm 
 
 
-working_dir = 'scratch'
-subset_dirs = ['train', 'val', 'test']
-
-for subset_dir in subset_dirs[1:]:
+def cutout_images(working_dir, subset_dir):
     read_dir = os.path.join(working_dir, 'data', subset_dir)
     data_csv = {'image': [], 'class': [], 'width': [], 'height': []}
     data = json.load(open(os.path.join(read_dir, 'annotations.json')))
@@ -29,4 +26,5 @@ for subset_dir in subset_dirs[1:]:
         data_csv['width'].append(w)
         data_csv['height'].append(h)
         plt.imsave(write_to, result)
-    pd.DataFrame(data_csv).to_csv(os.path.join(working_dir, 'classify', subset_dir, 'data.csv'), index=False)
+    pd.DataFrame(data_csv).to_csv(
+        os.path.join(working_dir, 'classify', subset_dir, 'data.csv'), index=False)
